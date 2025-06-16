@@ -8,7 +8,7 @@ pipeline {
 
                 // Clone the Git repository
                 git branch: 'master',
-                    url: 'https://github.com/VenkatVGS/VpcTfCodes.git'
+                    url: 'https://github.com/muthubharathi740/VpcTfCodes.git'
 
                 sh "ls -lart"
             }
@@ -16,7 +16,7 @@ pipeline {
 
         stage('Terraform Init') {
                     steps {
-                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vgs']]){
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vmb']]){
                             
                             sh 'echo "=================Terraform Init=================="'
                             sh 'terraform init'
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Terraform Validate') {
     steps {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vgs']]) {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vmb']]) {
             
                 sh 'echo "=================Terraform Validate=================="'
                 sh 'terraform validate'
@@ -36,7 +36,7 @@ pipeline {
 }
         stage('Terraform Plan') {
             steps {                           
-                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vgs']]){
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vmb']]){
                             
                                 sh 'echo "=================Terraform Plan=================="'
                                 sh 'terraform plan'
@@ -46,7 +46,7 @@ pipeline {
                 }        
         stage('Terraform Apply') {
             steps {               
-                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vgs']]){
+                       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-vmb']]){
                             
                                 sh 'echo "=================Terraform Apply=================="'
                                 sh 'terraform apply -auto-approve'

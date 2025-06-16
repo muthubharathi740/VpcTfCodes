@@ -1,6 +1,9 @@
 # Create New VPC
 resource "aws_vpc" "myvpc" {
   cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "myvpc"
+  }
 }
 
 # Create Pub Subnet
@@ -10,7 +13,7 @@ resource "aws_subnet" "pub-subnet" {
   availability_zone = "ap-south-1b"
 
   tags = {
-    Name = "public-subnettt"
+    Name = "public-subnet"
   }
 }
 
@@ -21,7 +24,7 @@ resource "aws_subnet" "pvt-subnet" {
   availability_zone = "ap-south-1a"
 
   tags = {
-    Name = "private-subnett"
+    Name = "private-subnet"
   }
 }
 # Routing Table For Public
@@ -129,7 +132,7 @@ resource "aws_security_group" "pvt-sg" {
 # Ec2 Pub
 resource "aws_instance" "public-ec2" {
   ami    = "ami-0ad21ae1d0696ad58"
-  instance_type = "t2.small"
+  instance_type = "t2.micro"
   subnet_id     = aws_subnet.pub-subnet.id
   #key_name   = "ajith22"
   associate_public_ip_address = true
@@ -142,7 +145,7 @@ resource "aws_instance" "public-ec2" {
 # EC2 Prvt
 resource "aws_instance" "private-ec2" {
   ami    = "ami-0ad21ae1d0696ad58"
-  instance_type = "t2.small"
+  instance_type = "t2.micro"
   subnet_id     = aws_subnet.pvt-subnet.id
   #key_name   = "ajith22"
   vpc_security_group_ids = [aws_security_group.pvt-sg.id]
